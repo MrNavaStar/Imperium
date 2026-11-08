@@ -15,7 +15,7 @@ services:
       SELF_UPDATE_STRATEGY: auto
       POLL_CONFIG: |
         - url: https://github.com/MrNavaStar/Imperium.git
-          reference: main
+          reference: master
           interval: 120
       # Private repository: uncomment these two lines, the "secrets" lines below
       # and the top-level "secrets" block. See the Getting Started guide.
@@ -41,7 +41,6 @@ services:
 
 volumes:
   data:
-
 # Path of the token file.
 # secrets:
 #   git_access_token:
