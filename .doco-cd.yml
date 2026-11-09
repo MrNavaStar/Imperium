@@ -11,3 +11,8 @@ timeout: 120
 name: my-app
 working_dir: app
 compose_files: [compose.yaml]
+
+---
+name: unifi-controller
+working_dir: services/network/unifi
+compose_files: [compose.yaml]
