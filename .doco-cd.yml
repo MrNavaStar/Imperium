@@ -8,11 +8,11 @@ compose_files: [compose.yaml]
 timeout: 120
 
 ---
-name: my-app
-working_dir: app
+name: unifi-controller
+working_dir: services/network/unifi
 compose_files: [compose.yaml]
 
 ---
-name: unifi-controller
-working_dir: services/network/unifi
+name: home-assistant
+working_dir: services/automation/home
 compose_files: [compose.yaml]

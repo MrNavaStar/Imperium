@@ -1,0 +1,19 @@
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    volumes:
+      # Map this local folder to /config inside the container
+      - /home/user/homeassistant/config:/config
+      # Share the host's time with the container
+      - /etc/localtime:/etc/localtime:ro
+      # Required for Bluetooth integrations
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    # Gives Home Assistant enough time to close the database cleanly on shutdown
+    stop_grace_period: 60s
+    privileged: true
+    network_mode: host
+    environment:
+      - TZ=America/Chicago
+
