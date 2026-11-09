@@ -1,0 +1,24 @@
+services:
+  unifi-network:
+    image: lscr.io/linuxserver/unifi-controller:latest
+    container_name: unifi
+    environment:
+      # Timezone (e.g., America/New_York)
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Edmonton
+      # Optional: Set initial admin password
+      # - INITIAL_ADMIN_PASSWORD=your_password
+    volumes:
+      # Stores configuration and database files
+      - ./unifi/config:/config
+    ports:
+      - 8443:8443 # Web Interface
+      - 3478:3478/udp # STUN
+      - 10001:10001/udp # AP Discovery
+      - 8080:8080 # Intra-controller communication
+      - 6789:6789 # Speedtest
+      - 8843:8843 # HTTPs Guest Portal
+      - 8880:8880 # HTTP Guest Portal
+    restart: unless-stopped
+
