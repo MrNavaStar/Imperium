@@ -2,6 +2,12 @@
 # doco-cd deploys itself from this repo. The stack name and the service name
 # must match the managed Compose project and service so doco-cd recognises
 # the stack as its own after the bootstrap.
+
+destroy:
+  enabled: true
+  remove_volumes: false
+  remove_images: true
+
 name: doco-cd
 working_dir: doco-cd
 compose_files: [compose.yaml]
