@@ -3,8 +3,8 @@ services:
     container_name: homeassistant
     image: ghcr.io/home-assistant/home-assistant:stable
     volumes:
-      # Map this local folder to /config inside the container
-      - /home/user/homeassistant/config:/config
+      # Persistent configuration
+      - homeassistant-config:/config
       # Share the host's time with the container
       - /etc/localtime:/etc/localtime:ro
       # Required for Bluetooth integrations
@@ -17,3 +17,5 @@ services:
     environment:
       - TZ=America/Chicago
 
+volumes:
+  homeassistant-config:

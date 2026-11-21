@@ -8,9 +8,13 @@ services:
       - 38000:38000 # Admin web interface
     volumes:
       # Persistent data (MMS files, message logs)
-      - ./mmsgate2/data:/data
+      - mmsgate2-data:/data
       # OpenSIPS configuration
-      - ./mmsgate2/opensips:/etc/opensips
+      - mmsgate2-opensips:/etc/opensips
     environment:
       - TZ=America/Edmonton
     restart: unless-stopped
+
+volumes:
+  mmsgate2-data:
+  mmsgate2-opensips:
