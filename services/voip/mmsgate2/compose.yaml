@@ -2,8 +2,6 @@ services:
   mmsgate2:
     container_name: mmsgate2
     image: rvgo4it/mmsgate2:latest
-    memory: 100m
-    cpus: 2
     ports:
       - 5061:5061   # SIP
       - 38443:38443 # Encrypted SIP
