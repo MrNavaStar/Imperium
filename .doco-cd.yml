@@ -1,29 +1,48 @@
 # yaml-language-server: $schema=https://doco.cd/latest/schemas/deploy.schema.json
-# doco-cd deploys itself from this repo. The stack name and the service name
-# must match the managed Compose project and service so doco-cd recognises
-# the stack as its own after the bootstrap.
+#
+# Key behaviour:
+#   • remove_orphans: true  → containers/services NOT in the compose file are
+#                             stopped and removed after every deploy.
+#   • timeout: 120          → generous default so slow services can finish.
+#
+# Multiple deployment targets (different machines) are supported via:
+#   1. The `context` field on any stack — points to a named Docker context
+#      (e.g. `context: remote-server` for a SSH context on another machine).
+#   2. Separate config files per target — deploy to `doco-cd.<target>.yml`
+#      and send webhooks to `/v1/webhook/<target>`.
+#
+# See: https://doco.cd/latest/Deploy-Settings/#multiple-deployment-targets
 
-destroy:
-  enabled: true
-  remove_volumes: false
-  remove_images: true
-
+# ────────────────────────────────────────────────────────────── doco-cd ──────────────────────────────────────────────────────────────
 name: doco-cd
 working_dir: doco-cd
 compose_files: [compose.yaml]
+remove_orphans: true
 timeout: 120
+destroy:
+  enabled: true
+  remove_images: true   # keep images so self-update rollbacks work; set false to reclaim disk
 
 ---
+# ─────────────────────────────── unifi-controller ───────────────────────────────
 name: unifi-controller
 working_dir: services/network/unifi
 compose_files: [compose.yaml]
+remove_orphans: true
+timeout: 120
 
 ---
+# ─────────────────────────────── home-assistant ───────────────────────────────
 name: home-assistant
 working_dir: services/automation/home
 compose_files: [compose.yaml]
+remove_orphans: true
+timeout: 120
 
 ---
+# ─────────────────────────────── mmsgate2 ───────────────────────────────
 name: mmsgate2
 working_dir: services/voip/mmsgate2
 compose_files: [compose.yaml]
+remove_orphans: true
+timeout: 120
