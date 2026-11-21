@@ -19,9 +19,6 @@ working_dir: doco-cd
 compose_files: [compose.yaml]
 remove_orphans: true
 timeout: 120
-destroy:
-  enabled: true
-  remove_images: true   # keep images so self-update rollbacks work; set false to reclaim disk
 
 ---
 # ─────────────────────────────── unifi-controller ───────────────────────────────
