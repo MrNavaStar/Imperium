@@ -22,3 +22,8 @@ compose_files: [compose.yaml]
 name: home-assistant
 working_dir: services/automation/home
 compose_files: [compose.yaml]
+
+---
+name: mmsgate2
+working_dir: services/voip/mmsgate2
+compose_files: [compose.yaml]

@@ -1,0 +1,18 @@
+services:
+  mmsgate2:
+    container_name: mmsgate2
+    image: rvgo4it/mmsgate2:latest
+    memory: 100m
+    cpus: 2
+    ports:
+      - 5061:5061   # SIP
+      - 38443:38443 # Encrypted SIP
+      - 38000:38000 # Admin web interface
+    volumes:
+      # Persistent data (MMS files, message logs)
+      - ./mmsgate2/data:/data
+      # OpenSIPS configuration
+      - ./mmsgate2/opensips:/etc/opensips
+    environment:
+      - TZ=America/Edmonton
+    restart: unless-stopped
