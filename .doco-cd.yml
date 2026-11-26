@@ -8,14 +8,14 @@
 # Multiple deployment targets (different machines) are supported via:
 #   1. The `context` field on any stack — points to a named Docker context
 #      (e.g. `context: remote-server` for a SSH context on another machine).
-#   2. Separate config files per target — deploy to `doco-cd.<target>.yml`
+#   2. Separate config files per target — deploy to `deployment.<target>.yml`
 #      and send webhooks to `/v1/webhook/<target>`.
 #
 # See: https://doco.cd/latest/Deploy-Settings/#multiple-deployment-targets
 
-# ────────────────────────────────────────────────────────────── doco-cd ──────────────────────────────────────────────────────────────
-name: doco-cd
-working_dir: doco-cd
+# ────────────────────────────────────────────────────────────── deployment ──────────────────────────────────────────────────────────────
+name: deployment
+working_dir: deployment
 compose_files: [compose.yaml]
 remove_orphans: true
 timeout: 120
