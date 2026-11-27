@@ -19,52 +19,23 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - data:/data
       - ./secret-store.yaml:/secret-store.yml:ro
-    healthcheck:
-      interval: 10s
-      timeout: 5s
-      start_period: 15s
-      retries: 3
-
-  vaultwarden:
-    image: vaultwarden/server:1.37.5
-    restart: unless-stopped
-    environment:
-      SIGNUPS_ALLOWED: "true"
-    volumes:
-      - vaultwarden-data:/data
-    ports:
-      - "8082:80"
 
   bitwarden-api:
     image: ghcr.io/kimdre/bitwarden-rest-api-server:latest
+    environment:
+      - BW_HOST=${BW_HOST:-https://vault.bitwarden.com}
+      - BW_CLIENTID=${BW_CLIENTID:?error}
+      - BW_CLIENTSECRET=${BW_CLIENTSECRET:?error}
+      - BW_PASSWORD=${BW_PASSWORD:?error}
+    ports:
+      - "8087:8087"
     restart: unless-stopped
-    depends_on:
-      vaultwarden:
-        condition: service_started
-      set_permissions:
-        condition: service_completed_successfully
     init: true
     read_only: true
-    environment:
-      BW_HOST: http://vaultwarden:80
-      BW_CLIENTID: ${BW_CLIENTID:?Set BW_CLIENTID in .env}
-      BW_CLIENTSECRET: ${BW_CLIENTSECRET:?Set BW_CLIENTSECRET in .env}
-      BW_PASSWORD: ${BW_PASSWORD:?Set BW_PASSWORD in .env}
-    expose:
-      - "8087"
     cap_drop:
       - ALL
-    volumes:
-      - bw-data:/data
-
-  set_permissions:
-    image: busybox:latest
-    restart: "no"
-    command: sh -c "chown -R 65532:65532 /data"
-    volumes:
-      - bw-data:/data
+    tmpfs:
+      - /data:uid=65532,gid=65532,mode=755
 
 volumes:
   data:
-  vaultwarden-data:
-  bw-data:
