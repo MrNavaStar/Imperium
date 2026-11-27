@@ -19,6 +19,27 @@ working_dir: deployment
 compose_files: [compose.yaml]
 remove_orphans: true
 timeout: 120
+external_secrets:
+  BW_HOST:
+    store_ref: bitwarden-login
+    remote_ref:
+      key: 98487473-23ca-4a16-8d56-ed110554bbfa
+      property: username
+  BW_PASSWORD:
+    store_ref: bitwarden-login
+    remote_ref:
+      key: 98487473-23ca-4a16-8d56-ed110554bbfa
+      property: password
+  BW_CLIENTID:
+    store_ref: bitwarden-login
+    remote_ref:
+      key: 66569b57-628a-4bed-8030-0fb470480698
+      property: username
+  BW_CLIENTSECRET:
+    store_ref: bitwarden-login
+    remote_ref:
+      key: 66569b57-628a-4bed-8030-0fb470480698
+      property: password
 
 ---
 # ─────────────────────────────── unifi-controller ───────────────────────────────
